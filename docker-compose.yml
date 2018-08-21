@@ -10,5 +10,3 @@ services:
       - 4000:80
     depends_on:
     - redis
-git config user.name "Richard Pablo"
-git config user.email "richardpablop@gmail.com"
