@@ -1,12 +1,36 @@
-version: "2.1"
+version: "3"
 services:
   redis:
-    image: redis
+    image: redis:4
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
     ports:
       - 16379:6379
+    networks:
+      - webnet
   friendly-hello:
-    image: friendlyhello
+    image: r1ckr/friendlyhello:2
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
     ports:
       - 4000:80
+    networks:
+      - webnet
     depends_on:
     - redis
+    environment:
+      NAME: mars
+networks:
+  webnet:
